@@ -45,6 +45,7 @@ function getCertificates() {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/bhashamitra/', // GitHub Pages base path
   root: '.',
   build: {
     outDir: 'dist',
