@@ -550,7 +550,7 @@ Response format (শুধুমাত্র valid JSON object return করু�
             <button onClick={() => setShowInstructions(true)} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%', padding: '8px', cursor: 'pointer', color: 'white' }}>❓</button>
             <div style={{ textAlign: 'center', flex: 1 }}>
               <h1 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '4px' }}>🌟 ভাষা মিত্র</h1>
-              <p style={{ fontSize: '12px', opacity: 0.9 }}>Google Gemini AI দ্বারা চালিত</p>
+              <p style={{ fontSize: '12px', opacity: 0.9 }}>Created by: Himadri | 01714796566</p>
             </div>
             <button onClick={() => setShowSettings(true)} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%', padding: '8px', cursor: 'pointer', color: 'white' }}>⚙️</button>
           </div>
