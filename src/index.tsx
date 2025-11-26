@@ -803,3 +803,8 @@ Office.onReady(() => {
   const root = ReactDOM.createRoot(document.getElementById('root')!);
   root.render(<App />);
 });
+// Footer credit
+<footer style={{ textAlign: 'center', padding: '10px', fontSize: '12px', color: '#6b7280', borderTop: '1px solid #e5e7eb', marginTop: '20px' }}>
+  <p>ভাষা মিত্র - Bangla Language Assistant</p>
+  <p>Created by: Himadri | Powered by Google Gemini</p>
+</footer>
