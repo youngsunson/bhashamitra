@@ -389,8 +389,19 @@ Response format (শুধুমাত্র valid JSON object return করু�
     await scrollToTextInWord(word);
   };
 
+  // ----------------------------------------------------------------------
+  // RENDER METHOD (Fixed Layout for Footer)
+  // ----------------------------------------------------------------------
   return (
-    <div style={{ fontFamily: "'Noto Sans Bengali', sans-serif", background: 'linear-gradient(to bottom right, #eff6ff, #e0e7ff)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    // Root Container: Full Viewport Height, No Outer Scroll
+    <div style={{ 
+      fontFamily: "'Noto Sans Bengali', sans-serif", 
+      background: 'linear-gradient(to bottom right, #eff6ff, #e0e7ff)', 
+      height: '100vh', 
+      display: 'flex', 
+      flexDirection: 'column',
+      overflow: 'hidden'
+    }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap');
         
@@ -542,10 +553,20 @@ Response format (শুধুমাত্র valid JSON object return করু�
         </div>
       )}
 
-      {/* Main Content */}
-      <div style={{ background: 'white', borderRadius: '0', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* Header */}
-        <div style={{ background: 'linear-gradient(to right, #4f46e5, #7c3aed)', color: 'white', padding: '20px' }}>
+      {/* Main App Wrapper */}
+      <div style={{ 
+        background: 'white', 
+        borderRadius: '0', 
+        boxShadow: '0 4px 6px rgba(0,0,0,0.1)', 
+        flex: 1, 
+        display: 'flex', 
+        flexDirection: 'column',
+        height: '100%',
+        overflow: 'hidden' // Important for inner layout
+      }}>
+        
+        {/* Header - Fixed Height */}
+        <div style={{ background: 'linear-gradient(to right, #4f46e5, #7c3aed)', color: 'white', padding: '20px', flexShrink: 0 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <button onClick={() => setShowInstructions(true)} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%', padding: '8px', cursor: 'pointer', color: 'white' }}>❓</button>
             <div style={{ textAlign: 'center', flex: 1 }}>
@@ -556,7 +577,13 @@ Response format (শুধুমাত্র valid JSON object return করু�
           </div>
         </div>
 
-        <div style={{ padding: '20px', flex: 1, overflowY: 'auto' }}>
+        {/* Scrollable Content Area */}
+        <div style={{ 
+          padding: '20px', 
+          flex: 1, 
+          overflowY: 'auto', // This enables scrolling ONLY in the middle
+          overflowX: 'hidden'
+        }}>
           {/* Check Button */}
           <button 
             onClick={checkSpelling}
@@ -607,195 +634,198 @@ Response format (শুধুমাত্র valid JSON object return করু�
             </div>
           )}
 
-          {/* Suggestions */}
-          <div>
-            {/* Content Analysis */}
-            {contentAnalysis && (
-              <>
-                <div style={{ border: '2px solid #6ee7b7', background: 'linear-gradient(to bottom right, #d1fae5, #a7f3d0)', borderRadius: '8px', padding: '16px', marginBottom: '16px' }}>
-                  <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#065f46', marginBottom: '12px' }}>📋 লেখার ধরন</h3>
-                  <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#047857', marginBottom: '4px' }}>{contentAnalysis.contentType}</p>
-                  {contentAnalysis.description && <p style={{ fontSize: '12px', color: '#374151' }}>{contentAnalysis.description}</p>}
-                </div>
+          {/* Content Analysis */}
+          {contentAnalysis && (
+            <>
+              <div style={{ border: '2px solid #6ee7b7', background: 'linear-gradient(to bottom right, #d1fae5, #a7f3d0)', borderRadius: '8px', padding: '16px', marginBottom: '16px' }}>
+                <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#065f46', marginBottom: '12px' }}>📋 লেখার ধরন</h3>
+                <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#047857', marginBottom: '4px' }}>{contentAnalysis.contentType}</p>
+                {contentAnalysis.description && <p style={{ fontSize: '12px', color: '#374151' }}>{contentAnalysis.description}</p>}
+              </div>
 
-                {contentAnalysis.missingElements && contentAnalysis.missingElements.length > 0 && (
-                  <div style={{ border: '2px solid #fcd34d', background: 'linear-gradient(to bottom right, #fef3c7, #fde68a)', borderRadius: '8px', padding: '16px', marginBottom: '16px' }}>
-                    <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#78350f', marginBottom: '12px' }}>⚠️ যা যোগ করা উচিত</h3>
-                    <ul>
-                      {contentAnalysis.missingElements.map((element, i) => (
-                        <li key={i} style={{ marginBottom: '8px', color: '#374151' }}>• {element}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {contentAnalysis.suggestions && contentAnalysis.suggestions.length > 0 && (
-                  <div style={{ border: '2px solid #5eead4', background: 'linear-gradient(to bottom right, #ccfbf1, #99f6e4)', borderRadius: '8px', padding: '16px', marginBottom: '16px' }}>
-                    <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#115e59', marginBottom: '12px' }}>✨ উন্নতির পরামর্শ</h3>
-                    <ul>
-                      {contentAnalysis.suggestions.map((suggestion, i) => (
-                        <li key={i} style={{ marginBottom: '8px', color: '#374151', display: 'flex', gap: '8px' }}>
-                          <span style={{ flexShrink: 0, width: '20px', height: '20px', background: '#0d9488', color: 'white', borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 'bold' }}>{i + 1}</span>
-                          <span>{suggestion}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </>
-            )}
-
-            {/* Spelling Errors */}
-            {corrections.length > 0 && (
-              <>
-                <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginBottom: '12px' }}>📝 বানান ভুল</h3>
-                {corrections.map((correction, i) => (
-                  <div 
-                    key={i} 
-                    className="suggestion-card" 
-                    style={{ borderColor: '#fecaca', background: 'rgba(254, 202, 202, 0.3)' }}
-                    onMouseEnter={() => handleHoverWord(correction.wrong)}
-                  >
-                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#dc2626', marginBottom: '8px' }}>❌ {correction.wrong}</div>
-                    <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '8px' }}>সঠিক বানান:</div>
-                    {correction.suggestions.map((suggestion, j) => (
-                      <button
-                        key={j}
-                        onClick={() => handleReplace(correction.wrong, suggestion)}
-                        className="suggestion-btn"
-                        style={{ background: '#d1fae5', borderColor: '#6ee7b7', color: '#065f46' }}
-                      >
-                        ✓ {suggestion}
-                      </button>
+              {contentAnalysis.missingElements && contentAnalysis.missingElements.length > 0 && (
+                <div style={{ border: '2px solid #fcd34d', background: 'linear-gradient(to bottom right, #fef3c7, #fde68a)', borderRadius: '8px', padding: '16px', marginBottom: '16px' }}>
+                  <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#78350f', marginBottom: '12px' }}>⚠️ যা যোগ করা উচিত</h3>
+                  <ul>
+                    {contentAnalysis.missingElements.map((element, i) => (
+                      <li key={i} style={{ marginBottom: '8px', color: '#374151' }}>• {element}</li>
                     ))}
-                  </div>
-                ))}
-              </>
-            )}
-
-            {/* Language Style Mixing */}
-            {languageStyleMixing && languageStyleMixing.detected && (
-              <>
-                <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginTop: '20px', marginBottom: '12px' }}>🔄 সাধু-চলিত ভাষা মিশ্রণ</h3>
-                <div style={{ border: '1px solid #ddd6fe', background: 'rgba(216, 180, 254, 0.5)', borderRadius: '8px', padding: '16px', marginBottom: '12px' }}>
-                  <div style={{ fontSize: '14px', fontWeight: '600', color: '#6b21a8' }}>প্রস্তাবিত রীতি: {languageStyleMixing.recommendedStyle}</div>
-                  <div style={{ fontSize: '12px', color: '#6b7280', fontStyle: 'italic', marginTop: '4px' }}>{languageStyleMixing.reason}</div>
+                  </ul>
                 </div>
-                {languageStyleMixing.corrections?.map((correction, i) => (
-                  <div 
-                    key={i} 
-                    className="suggestion-card" 
-                    style={{ borderColor: '#ddd6fe', background: 'rgba(216, 180, 254, 0.3)' }}
-                    onMouseEnter={() => handleHoverWord(correction.current)}
-                  >
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '14px', fontWeight: '600', color: '#7c3aed' }}>🔄 {correction.current}</span>
-                      <span style={{ fontSize: '10px', background: '#e9d5ff', color: '#6b21a8', padding: '2px 8px', borderRadius: '4px' }}>{correction.type}</span>
-                    </div>
-                    <button
-                      onClick={() => handleReplace(correction.current, correction.suggestion)}
-                      className="suggestion-btn"
-                      style={{ background: '#e9d5ff', borderColor: '#c084fc', color: '#6b21a8' }}
-                    >
-                      ➜ {correction.suggestion}
-                    </button>
-                  </div>
-                ))}
-              </>
-            )}
+              )}
 
-            {/* Tone Improvements */}
-            {toneImprovements.length > 0 && (
-              <>
-                <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginTop: '20px', marginBottom: '12px' }}>💬 লেখার ভাব অনুযায়ী পরিবর্তন</h3>
-                {toneImprovements.map((improvement, i) => (
-                  <div 
-                    key={i} 
-                    className="suggestion-card" 
-                    style={{ borderColor: '#bfdbfe', background: 'rgba(191, 219, 254, 0.3)' }}
-                    onMouseEnter={() => handleHoverWord(improvement.current)}
-                  >
-                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#2563eb', marginBottom: '4px' }}>💡 {improvement.current}</div>
-                    <div style={{ fontSize: '11px', color: '#6b7280', fontStyle: 'italic', marginBottom: '8px' }}>{improvement.reason}</div>
-                    {improvement.suggestions.map((suggestion, j) => (
-                      <button
-                        key={j}
-                        onClick={() => handleReplace(improvement.current, suggestion)}
-                        className="suggestion-btn"
-                        style={{ background: '#dbeafe', borderColor: '#93c5fd', color: '#1e40af' }}
-                      >
-                        ✨ {suggestion}
-                      </button>
+              {contentAnalysis.suggestions && contentAnalysis.suggestions.length > 0 && (
+                <div style={{ border: '2px solid #5eead4', background: 'linear-gradient(to bottom right, #ccfbf1, #99f6e4)', borderRadius: '8px', padding: '16px', marginBottom: '16px' }}>
+                  <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#115e59', marginBottom: '12px' }}>✨ উন্নতির পরামর্শ</h3>
+                  <ul>
+                    {contentAnalysis.suggestions.map((suggestion, i) => (
+                      <li key={i} style={{ marginBottom: '8px', color: '#374151', display: 'flex', gap: '8px' }}>
+                        <span style={{ flexShrink: 0, width: '20px', height: '20px', background: '#0d9488', color: 'white', borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 'bold' }}>{i + 1}</span>
+                        <span>{suggestion}</span>
+                      </li>
                     ))}
-                  </div>
-                ))}
-              </>
-            )}
+                  </ul>
+                </div>
+              )}
+            </>
+          )}
 
-            {/* Punctuation Issues */}
-            {punctuationIssues.length > 0 && (
-              <>
-                <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginTop: '20px', marginBottom: '12px' }}>🔤 বিরাম চিহ্ন সমস্যা</h3>
-                {punctuationIssues.map((issue, i) => (
-                  <div key={i} className="suggestion-card" style={{ borderColor: '#fed7aa', background: 'rgba(254, 215, 170, 0.3)' }}>
-                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#ea580c', marginBottom: '4px' }}>⚠️ {issue.issue}</div>
-                    <div style={{ fontSize: '11px', color: '#6b7280', fontStyle: 'italic', marginBottom: '8px' }}>{issue.explanation}</div>
-                    <div style={{ background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: '6px', padding: '8px', marginBottom: '8px' }}>
-                      <div style={{ fontSize: '11px', color: '#6b7280', marginBottom: '4px' }}>বর্তমান:</div>
-                      <div style={{ fontSize: '13px', color: '#374151' }}>{issue.currentSentence}</div>
-                    </div>
+          {/* Spelling Errors */}
+          {corrections.length > 0 && (
+            <>
+              <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginBottom: '12px' }}>📝 বানান ভুল</h3>
+              {corrections.map((correction, i) => (
+                <div 
+                  key={i} 
+                  className="suggestion-card" 
+                  style={{ borderColor: '#fecaca', background: 'rgba(254, 202, 202, 0.3)' }}
+                  onMouseEnter={() => handleHoverWord(correction.wrong)}
+                >
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: '#dc2626', marginBottom: '8px' }}>❌ {correction.wrong}</div>
+                  <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '8px' }}>সঠিক বানান:</div>
+                  {correction.suggestions.map((suggestion, j) => (
                     <button
-                      onClick={() => handleReplace(issue.currentSentence, issue.correctedSentence)}
+                      key={j}
+                      onClick={() => handleReplace(correction.wrong, suggestion)}
                       className="suggestion-btn"
                       style={{ background: '#d1fae5', borderColor: '#6ee7b7', color: '#065f46' }}
                     >
-                      <div style={{ fontSize: '11px', marginBottom: '4px' }}>✓ সংশোধিত:</div>
-                      <div style={{ fontSize: '13px', fontWeight: '500' }}>{issue.correctedSentence}</div>
+                      ✓ {suggestion}
                     </button>
-                  </div>
-                ))}
-              </>
-            )}
+                  ))}
+                </div>
+              ))}
+            </>
+          )}
 
-            {/* Euphony Improvements */}
-            {euphonyImprovements.length > 0 && (
-              <>
-                <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginTop: '20px', marginBottom: '12px' }}>🎵 শ্রুতিমধুরতা উন্নতি</h3>
-                {euphonyImprovements.map((improvement, i) => (
-                  <div 
-                    key={i} 
-                    className="suggestion-card" 
-                    style={{ borderColor: '#fbcfe8', background: 'rgba(251, 207, 232, 0.3)' }}
-                    onMouseEnter={() => handleHoverWord(improvement.current)}
-                  >
-                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#db2777', marginBottom: '4px' }}>🎵 {improvement.current}</div>
-                    <div style={{ fontSize: '11px', color: '#6b7280', fontStyle: 'italic', marginBottom: '8px' }}>{improvement.reason}</div>
-                    {improvement.suggestions.map((suggestion, j) => (
-                      <button
-                        key={j}
-                        onClick={() => handleReplace(improvement.current, suggestion)}
-                        className="suggestion-btn"
-                        style={{ background: '#fce7f3', borderColor: '#f9a8d4', color: '#9f1239' }}
-                      >
-                        ♪ {suggestion}
-                      </button>
-                    ))}
+          {/* Language Style Mixing */}
+          {languageStyleMixing && languageStyleMixing.detected && (
+            <>
+              <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginTop: '20px', marginBottom: '12px' }}>🔄 সাধু-চলিত ভাষা মিশ্রণ</h3>
+              <div style={{ border: '1px solid #ddd6fe', background: 'rgba(216, 180, 254, 0.5)', borderRadius: '8px', padding: '16px', marginBottom: '12px' }}>
+                <div style={{ fontSize: '14px', fontWeight: '600', color: '#6b21a8' }}>প্রস্তাবিত রীতি: {languageStyleMixing.recommendedStyle}</div>
+                <div style={{ fontSize: '12px', color: '#6b7280', fontStyle: 'italic', marginTop: '4px' }}>{languageStyleMixing.reason}</div>
+              </div>
+              {languageStyleMixing.corrections?.map((correction, i) => (
+                <div 
+                  key={i} 
+                  className="suggestion-card" 
+                  style={{ borderColor: '#ddd6fe', background: 'rgba(216, 180, 254, 0.3)' }}
+                  onMouseEnter={() => handleHoverWord(correction.current)}
+                >
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+                    <span style={{ fontSize: '14px', fontWeight: '600', color: '#7c3aed' }}>🔄 {correction.current}</span>
+                    <span style={{ fontSize: '10px', background: '#e9d5ff', color: '#6b21a8', padding: '2px 8px', borderRadius: '4px' }}>{correction.type}</span>
                   </div>
-                ))}
-              </>
-            )}
-            
-            {/* No issues found message */}
-            {!isLoading && corrections.length === 0 && toneImprovements.length === 0 && 
-             !languageStyleMixing?.detected && punctuationIssues.length === 0 && 
-             euphonyImprovements.length === 0 && !contentAnalysis && (
-              <p style={{ textAlign: 'center', color: '#9ca3af', marginTop: '80px' }}>সাজেশন এখানে দেখা যাবে...</p>
-            )}
-          </div>
+                  <button
+                    onClick={() => handleReplace(correction.current, correction.suggestion)}
+                    className="suggestion-btn"
+                    style={{ background: '#e9d5ff', borderColor: '#c084fc', color: '#6b21a8' }}
+                  >
+                    ➜ {correction.suggestion}
+                  </button>
+                </div>
+              ))}
+            </>
+          )}
+
+          {/* Tone Improvements */}
+          {toneImprovements.length > 0 && (
+            <>
+              <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginTop: '20px', marginBottom: '12px' }}>💬 লেখার ভাব অনুযায়ী পরিবর্তন</h3>
+              {toneImprovements.map((improvement, i) => (
+                <div 
+                  key={i} 
+                  className="suggestion-card" 
+                  style={{ borderColor: '#bfdbfe', background: 'rgba(191, 219, 254, 0.3)' }}
+                  onMouseEnter={() => handleHoverWord(improvement.current)}
+                >
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: '#2563eb', marginBottom: '4px' }}>💡 {improvement.current}</div>
+                  <div style={{ fontSize: '11px', color: '#6b7280', fontStyle: 'italic', marginBottom: '8px' }}>{improvement.reason}</div>
+                  {improvement.suggestions.map((suggestion, j) => (
+                    <button
+                      key={j}
+                      onClick={() => handleReplace(improvement.current, suggestion)}
+                      className="suggestion-btn"
+                      style={{ background: '#dbeafe', borderColor: '#93c5fd', color: '#1e40af' }}
+                    >
+                      ✨ {suggestion}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </>
+          )}
+
+          {/* Punctuation Issues */}
+          {punctuationIssues.length > 0 && (
+            <>
+              <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginTop: '20px', marginBottom: '12px' }}>🔤 বিরাম চিহ্ন সমস্যা</h3>
+              {punctuationIssues.map((issue, i) => (
+                <div key={i} className="suggestion-card" style={{ borderColor: '#fed7aa', background: 'rgba(254, 215, 170, 0.3)' }}>
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: '#ea580c', marginBottom: '4px' }}>⚠️ {issue.issue}</div>
+                  <div style={{ fontSize: '11px', color: '#6b7280', fontStyle: 'italic', marginBottom: '8px' }}>{issue.explanation}</div>
+                  <div style={{ background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: '6px', padding: '8px', marginBottom: '8px' }}>
+                    <div style={{ fontSize: '11px', color: '#6b7280', marginBottom: '4px' }}>বর্তমান:</div>
+                    <div style={{ fontSize: '13px', color: '#374151' }}>{issue.currentSentence}</div>
+                  </div>
+                  <button
+                    onClick={() => handleReplace(issue.currentSentence, issue.correctedSentence)}
+                    className="suggestion-btn"
+                    style={{ background: '#d1fae5', borderColor: '#6ee7b7', color: '#065f46' }}
+                  >
+                    <div style={{ fontSize: '11px', marginBottom: '4px' }}>✓ সংশোধিত:</div>
+                    <div style={{ fontSize: '13px', fontWeight: '500' }}>{issue.correctedSentence}</div>
+                  </button>
+                </div>
+              ))}
+            </>
+          )}
+
+          {/* Euphony Improvements */}
+          {euphonyImprovements.length > 0 && (
+            <>
+              <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: '#374151', marginTop: '20px', marginBottom: '12px' }}>🎵 শ্রুতিমধুরতা উন্নতি</h3>
+              {euphonyImprovements.map((improvement, i) => (
+                <div 
+                  key={i} 
+                  className="suggestion-card" 
+                  style={{ borderColor: '#fbcfe8', background: 'rgba(251, 207, 232, 0.3)' }}
+                  onMouseEnter={() => handleHoverWord(improvement.current)}
+                >
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: '#db2777', marginBottom: '4px' }}>🎵 {improvement.current}</div>
+                  <div style={{ fontSize: '11px', color: '#6b7280', fontStyle: 'italic', marginBottom: '8px' }}>{improvement.reason}</div>
+                  {improvement.suggestions.map((suggestion, j) => (
+                    <button
+                      key={j}
+                      onClick={() => handleReplace(improvement.current, suggestion)}
+                      className="suggestion-btn"
+                      style={{ background: '#fce7f3', borderColor: '#f9a8d4', color: '#9f1239' }}
+                    >
+                      ♪ {suggestion}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </>
+          )}
+
+          {/* No issues found message */}
+          {!isLoading && corrections.length === 0 && toneImprovements.length === 0 && 
+           !languageStyleMixing?.detected && punctuationIssues.length === 0 && 
+           euphonyImprovements.length === 0 && !contentAnalysis && (
+            <p style={{ textAlign: 'center', color: '#9ca3af', marginTop: '80px' }}>সাজেশন এখানে দেখা যাবে...</p>
+          )}
         </div>
-      
-        {/* Developer Footer - এখন এটি সঠিক স্থানে আছে */}
-        <div style={{ background: 'linear-gradient(to right, #f3f4f6, #e5e7eb)', padding: '16px', textAlign: 'center', borderTop: '2px solid #d1d5db', marginTop: 'auto' }}>
+
+        {/* Developer Footer - FIXED BOTTOM */}
+        <div style={{ 
+          background: 'linear-gradient(to right, #f3f4f6, #e5e7eb)', 
+          padding: '16px', 
+          textAlign: 'center', 
+          borderTop: '2px solid #d1d5db', 
+          flexShrink: 0 
+        }}>
           <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px', fontWeight: '600' }}>
             Developed by: হিমাদ্রি বিশ্বাস
           </p>
@@ -803,6 +833,7 @@ Response format (শুধুমাত্র valid JSON object return করু�
             📞 +880 9696 196566
           </p>
         </div>
+
       </div>
     </div>
   );
