@@ -797,10 +797,10 @@ Response format (শুধুমাত্র valid JSON object return করু�
     {/* Footer - Developer Info */}
 <div style={{ background: 'linear-gradient(to right, #f3f4f6, #e5e7eb)', padding: '16px', textAlign: 'center', borderTop: '2px solid #d1d5db' }}>
   <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>
-    <strong>Developed by:</strong> আপনার নাম
+    <strong>Developed by:</strong> হিমাদ্রি বিশ্বাস
   </p>
   <p style={{ fontSize: '11px', color: '#9ca3af' }}>
-    📞 +880 1XXX-XXXXXX
+    📞 +880 9696 196566
   </p>
 </div>
   );
