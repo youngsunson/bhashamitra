@@ -1,3 +1,5 @@
+/* src/index.css */
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap');
 
 * {
@@ -10,9 +12,13 @@ body {
   font-family: 'Noto Sans Bengali', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* যাতে স্ক্রোলবার না আসে */
 }
 
 #root {
   width: 100%;
-  height: 100vh;
+  height: 100vh; /* স্ক্রিনের ঠিক উচ্চতা রাখুন */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* যাতে ফুটারের জন্য স্ক্রোল না আসে */
 }
