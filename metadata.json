@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AI-চালিত বাংলা বানান পরীক্ষক এবং ব্যাকরণ সহায়ক",
   "author": "Bhasha Mitra Team",
-  "homepage": "https://localhost:3000",
+  "homepage": "https://youngsunson.github.io/bhashamitra/index.html",
   "supportedOfficeApps": [
     "Word"
   ],
