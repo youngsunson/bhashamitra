@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
@@ -146,7 +146,7 @@ function App() {
   const clearHighlights = async () => {
     await Word.run(async (context) => {
       const body = context.document.body;
-      body.font.highlightColor = "transparent";
+      body.font.highlightColor = null;
       await context.sync();
     }).catch((error) => {
       console.error('Error clearing highlights:', error);
@@ -263,7 +263,7 @@ Response format (শুধুমাত্র valid JSON object return করু�
         const analysisData = JSON.parse(jsonMatch[0]);
         
         const spellingErrors = analysisData.spellingErrors || [];
-        spellingErrors.forEach((error: SpellingError) => {
+        spellingErrors.forEach((error: SpellingError, index: number) => {
           if (error.position === undefined) {
             error.position = text.indexOf(error.wrong);
           }
@@ -550,7 +550,7 @@ Response format (শুধুমাত্র valid JSON object return করু�
             <button onClick={() => setShowInstructions(true)} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%', padding: '8px', cursor: 'pointer', color: 'white' }}>❓</button>
             <div style={{ textAlign: 'center', flex: 1 }}>
               <h1 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '4px' }}>🌟 ভাষা মিত্র</h1>
-              <p style={{ fontSize: '12px', opacity: 0.9 }}>Created by: Himadri | 01714796566</p>
+              <p style={{ fontSize: '12px', opacity: 0.9 }}>Google Gemini AI দ্বারা চালিত</p>
             </div>
             <button onClick={() => setShowSettings(true)} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%', padding: '8px', cursor: 'pointer', color: 'white' }}>⚙️</button>
           </div>
@@ -794,7 +794,15 @@ Response format (শুধুমাত্র valid JSON object return করু�
           </div>
         </div>
       </div>
-    </div>
+    {/* Footer - Developer Info */}
+<div style={{ background: 'linear-gradient(to right, #f3f4f6, #e5e7eb)', padding: '16px', textAlign: 'center', borderTop: '2px solid #d1d5db' }}>
+  <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>
+    <strong>Developed by:</strong> আপনার নাম
+  </p>
+  <p style={{ fontSize: '11px', color: '#9ca3af' }}>
+    📞 +880 1XXX-XXXXXX
+  </p>
+</div>
   );
 }
 
@@ -803,8 +811,3 @@ Office.onReady(() => {
   const root = ReactDOM.createRoot(document.getElementById('root')!);
   root.render(<App />);
 });
-// Footer credit
-<footer style={{ textAlign: 'center', padding: '10px', fontSize: '12px', color: '#6b7280', borderTop: '1px solid #e5e7eb', marginTop: '20px' }}>
-  <p>ভাষা মিত্র - Bangla Language Assistant</p>
-  <p>Created by: Himadri | Powered by Google Gemini</p>
-</footer>
