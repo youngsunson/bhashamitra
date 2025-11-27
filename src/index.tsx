@@ -171,7 +171,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/  ${selectedModel}:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -312,7 +312,7 @@ Response format (শুধুমাত্র valid JSON object return করু�
   const analyzeContent = async (text: string) => {
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/  ${selectedModel}:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -392,7 +392,7 @@ Response format (শুধুমাত্র valid JSON object return করু�
   return (
     <div style={{ fontFamily: "'Noto Sans Bengali', sans-serif", background: 'linear-gradient(to bottom right, #eff6ff, #e0e7ff)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali  :wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap');
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -784,8 +784,8 @@ Response format (শুধুমাত্র valid JSON object return করু�
                 ))}
               </>
             )}
-
-            {/* No issues found */}
+            
+            {/* No issues found message */}
             {!isLoading && corrections.length === 0 && toneImprovements.length === 0 && 
              !languageStyleMixing?.detected && punctuationIssues.length === 0 && 
              euphonyImprovements.length === 0 && !contentAnalysis && (
@@ -793,33 +793,21 @@ Response format (শুধুমাত্র valid JSON object return করু�
             )}
           </div>
         </div>
+      
+        {/* Developer Footer - এখন এটি সঠিক স্থানে আছে */}
+        <div style={{ background: 'linear-gradient(to right, #f3f4f6, #e5e7eb)', padding: '16px', textAlign: 'center', borderTop: '2px solid #d1d5db', marginTop: 'auto' }}>
+          <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px', fontWeight: '600' }}>
+            Developed by: হিমাদ্রি বিশ্বাস
+          </p>
+          <p style={{ fontSize: '11px', color: '#9ca3af' }}>
+            📞 +880 9696 196566
+          </p>
+        </div>
       </div>
-    {/* Footer - Developer Info */}
-    <div style={{
-      background: 'linear-gradient(to right, #f3f4f6, #e5e7eb)',
-      padding: '16px',
-      textAlign: 'center',
-      borderTop: '2px solid #d1d5db',
-      marginTop: 'auto' // ফুটার সবসময় নিচে রাখবে
-    }}>
-      <p style={{
-        fontSize: '12px',
-        color: '#6b7280',
-        marginBottom: '4px',
-        fontWeight: '500'
-      }}>
-        <strong>Developed by:</strong> হিমাদ্রি বিশ্বাস
-      </p>
-      <p style={{
-        fontSize: '11px',
-        color: '#9ca3af',
-        margin: 0
-      }}>
-        📞 +880 9696 196566
-      </p>
     </div>
-  </div>
-);
+  );
+}
+
 // Initialize Office and React
 Office.onReady(() => {
   const root = ReactDOM.createRoot(document.getElementById('root')!);
