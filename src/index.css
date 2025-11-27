@@ -8,6 +8,13 @@
   padding: 0;
 }
 
+/* html ট্যাগ যোগ করা জরুরি, যাতে height 100% ঠিকভাবে কাজ করে */
+html, body {
+  width: 100%;
+  height: 100%; 
+  overflow: hidden; /* বডি স্ক্রল বন্ধ রাখা, যাতে শুধু অ্যাপের ভিতরের অংশ স্ক্রল হয় */
+}
+
 body {
   font-family: 'Noto Sans Bengali', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -16,7 +23,7 @@ body {
 
 #root {
   width: 100%;
-  height: 100vh; /* স্ক্রিনের ঠিক উচ্চতা রাখুন */
+  height: 100%; /* vh এর বদলে 100% ব্যবহার করা নিরাপদ */
   display: flex;
   flex-direction: column;
 }
