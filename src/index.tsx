@@ -794,19 +794,32 @@ Response format (শুধুমাত্র valid JSON object return করু�
           </div>
         </div>
       </div>
-      {/* Footer - Developer Info */}
-      <div style={{ background: 'linear-gradient(to right, #f3f4f6, #e5e7eb)', padding: '16px', textAlign: 'center', borderTop: '2px solid #d1d5db' }}>
-        <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>
-          <strong>Developed by:</strong> হিমাদ্রি বিশ্বাস
-        </p>
-        <p style={{ fontSize: '11px', color: '#9ca3af' }}>
-          📞 +880 9696 196566
-        </p>
-      </div>
+    {/* Footer - Developer Info */}
+    <div style={{
+      background: 'linear-gradient(to right, #f3f4f6, #e5e7eb)',
+      padding: '16px',
+      textAlign: 'center',
+      borderTop: '2px solid #d1d5db',
+      marginTop: 'auto' // ফুটার সবসময় নিচে রাখবে
+    }}>
+      <p style={{
+        fontSize: '12px',
+        color: '#6b7280',
+        marginBottom: '4px',
+        fontWeight: '500'
+      }}>
+        <strong>Developed by:</strong> হিমাদ্রি বিশ্বাস
+      </p>
+      <p style={{
+        fontSize: '11px',
+        color: '#9ca3af',
+        margin: 0
+      }}>
+        📞 +880 9696 196566
+      </p>
     </div>
-  );
-}
-
+  </div>
+);
 // Initialize Office and React
 Office.onReady(() => {
   const root = ReactDOM.createRoot(document.getElementById('root')!);
