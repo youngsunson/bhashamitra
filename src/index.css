@@ -1,5 +1,4 @@
 /* src/index.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap');
 
 * {
@@ -8,22 +7,19 @@
   padding: 0;
 }
 
-/* html ট্যাগ যোগ করা জরুরি, যাতে height 100% ঠিকভাবে কাজ করে */
 html, body {
   width: 100%;
-  height: 100%; 
-  overflow: hidden; /* বডি স্ক্রল বন্ধ রাখা, যাতে শুধু অ্যাপের ভিতরের অংশ স্ক্রল হয় */
+  height: 100vh; /* স্ক্রিনের সমান উচ্চতা */
+  overflow: hidden; /* বাইরের বা গ্লোবাল স্ক্রলবার বন্ধ */
 }
 
 body {
   font-family: 'Noto Sans Bengali', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   width: 100%;
-  height: 100%; /* vh এর বদলে 100% ব্যবহার করা নিরাপদ */
+  height: 100%; /* বডির সমান উচ্চতা */
   display: flex;
   flex-direction: column;
 }
