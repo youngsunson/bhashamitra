@@ -8,8 +8,8 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Bhasha Mitra</ProviderName>
   <DefaultLocale>bn-BD</DefaultLocale>
-  <DisplayName DefaultValue="ভাষা মিত্র - Bangla Language Assistant"/>
-  <Description DefaultValue="AI-powered Bangla spell checker, grammar checker, and writing assistant for Microsoft Word using Google Gemini"/>
+  <DisplayName DefaultValue="ভাষা মিত্র - বানান পরীক্ষক "/>
+  <Description DefaultValue="Bangla spell checker, grammar checker, and writing assistant for Microsoft Word"/>
   <IconUrl DefaultValue="https://youngsunson.github.io/bhashamitra/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://youngsunson.github.io/bhashamitra/assets/icon-64.png"/>
   <SupportUrl DefaultValue="https://youngsunson.github.io/bhashamitra"/>
