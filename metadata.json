@@ -1,8 +1,8 @@
 {
   "name": "ভাষা মিত্র",
   "version": "1.0.0",
-  "description": "AI-চালিত বাংলা বানান পরীক্ষক এবং ব্যাকরণ সহায়ক",
-  "author": "Bhasha Mitra Team",
+  "description": "বাংলা বানান পরীক্ষক এবং ব্যাকরণ সহায়ক",
+  "author": "Himadri Biswas",
   "homepage": "https://youngsunson.github.io/bhashamitra/index.html",
   "supportedOfficeApps": [
     "Word"
