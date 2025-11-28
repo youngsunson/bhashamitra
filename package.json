@@ -1,7 +1,7 @@
 {
   "name": "bhasha-mitra-word-addin",
   "version": "1.0.0",
-  "description": "AI-powered Bangla language assistant for Microsoft Word using Google Gemini",
+  "description": "Bangla language assistant for Microsoft Word",
   "main": "index.html",
   "scripts": {
     "dev": "vite --port 3000 --host localhost",
